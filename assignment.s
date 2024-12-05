@@ -1,37 +1,54 @@
 .global _start
 
 _start:
-    // used to initialize the values in R0 and R1
+    // Initializing the values in R0 and R1
+    // Setting R0 to 10
     MOV R0, #10            
+
+    // Setting R1 to 20
     MOV R1, #20              
 
-    // storing the decimal
+    // Storing the decimal number 15 in R5 for further operations
     MOV R5, #15
 
-    // Compare the values in R0 and R1
-    // for the values in R0 and R1 compared
+    // Comparing the values in R0 and R1
+    // Performing R0 - R1 to set the condition flags
     CMP R0, R1               
 
+    // Branching to 'greater' if R0 is greater than R1
     BGT greater              
+    
+    // Branching to 'lesser' if R0 is less than R1
     BLT lesser               
-    BEQ equal                
+    
+    // Branching to 'equal' if R0 is equal to R1
+    BEQ equal                 
 
 greater:
- 
+    // Shifting R5 left by 2 bits when R0 is greater than R1
     LSL R5, R5, #2          
-    B terminate              // terminatating the program
+
+    // Proceeding to terminate the program
+    B terminate              
 
 lesser:
-    // Performing the one logical right shift on R5
+    // Shifting R5 right by 1 bit when R0 is less than R1
     LSR R5, R5, #1         
-    B terminate              // Terminating the program
+
+    // Proceeding to terminate the program
+    B terminate              
 
 equal:
-    
-    ROR R5, R5, #1           // Rotate R5 right by 1 bit
-    B terminate              // Terminating the program
+    // Rotating R5 right by 1 bit when R0 equals R1
+    ROR R5, R5, #1          
+
+    // Proceeding to terminate the program
+    B terminate              
 
 terminate:
-    // ending the program
+    // Ending the program by triggering the sys_exit system call
+    // Setting R7 to 1 for the exit syscall number
     MOV R7, #1               
-    SVC #0                  
+
+    // Calling the exit system call using SVC #0
+    SVC #0                   
